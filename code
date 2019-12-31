@@ -1,0 +1,73 @@
+import random
+
+capital = -1  #initializing capital 
+
+while capital <= 0 or type(capital) != int: 
+    try :
+        capital = int(input("saisissez le montant total dont vous allez disposer au cours de la soirée: "))
+        assert capital > 0
+    except AssertionError : 
+        print('Le montant doit être positif ! ')
+    except ValueError :
+        print('Vous devez saisir un montant')
+    
+continue_game = "True"   
+
+while capital > 0 and continue_game == "True": 
+    no_mise = -1
+    while (no_mise < 0 or no_mise > 49) or type(no_mise) != int :
+        try :
+            no_mise = int(input("Choisissez votre numéro :")) 
+            assert no_mise >= 0 and no_mise <= 49
+        except AssertionError :
+            print("Le numéro doit être compris entre 0 et 49!")
+        except ValueError : 
+            print("Vous devez renseigner un numéro! ")
+    
+    somme_mise = -1
+    while (somme_mise < 0 or somme_mise > capital) or type(somme_mise) != int : 
+        try :
+            somme_mise = int(input("Saisissez le montant de votre mise :"))
+            assert somme_mise <= capital and somme_mise > 0
+        except AssertionError :
+            print('Le montant doit être positif et inférieur à votre capital de départ:') 
+        except ValueError : 
+            print('Vous devez renseigner une somme')
+        
+    winning = random.randint(0,49)
+    print("Le numéro gagnant est :",winning)
+    
+        
+    if no_mise == winning : 
+        gain = 3*somme_mise
+        print("Vous avez gagné", gain, "€")
+    elif (no_mise %2 == 0) and (winning %2 == 0) :
+        gain = 0.5*somme_mise
+        print("Vous avez gagné", gain, "€")
+    elif (no_mise %2 != 0) and (winning %2 != 0) :
+        gain = 0.5*somme_mise
+        print("Vous avez gagné", gain, "€")
+    else :
+        gain = (-1)*somme_mise
+        print("Vous avez perdu", gain,"€")
+    
+    
+    capital += gain
+    
+    continuer = -1
+    if capital > 0 : 
+        while continuer != "False" and continuer != "True" : 
+            try :     
+                continuer = input("souhaitez-vous poursuivre la partie? True or False?")
+                assert continuer == "True" or continuer_partie == "False"
+            except AssertionError : 
+                print("Vous devez renseigner True ou False!")
+        
+        if continuer == "False" :
+                print("Vous avez choisi de vous arrêter et de partir avec", capital, "€")
+        continue_game = continuer
+    else :
+        print("fin de la partie, vous n'avez plus d'argent")
+    
+    
+                  
